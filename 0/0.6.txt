@@ -1,0 +1,8 @@
+note over selain:
+js-tiedostossa määritelty koodi lähettää käyttäjän antaman datan
+1. lomakkeen lähetyksen oletusarvoinen toiminta estetään (ei lähetetä lomaketta-> ei ladata sivua uudelleen)
+2. Koodi luo muistiinpanon ja lisää sen muistiinpanojen listaan piirtämällä ruudun sisällön uudelleen
+3. lähettää uuden muistiinpanon palvelimelle
+end note
+selain->palvelin:  HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+palvelin-->selain:  201 created
