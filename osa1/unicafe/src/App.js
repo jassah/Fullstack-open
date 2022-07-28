@@ -9,6 +9,10 @@ const App = () => {
   const [average, setAverage] = useState(0)
   const [positive, setPositive] = useState(0)
 
+  //En keksinyt, miksi ohjelma ei käytä uusimpia muuttujien arvoja laskutoimituksissa, joten lisäsin(tai vähensin) laskutoimitusten arvoihin uusimman palautteen lukuarvon..
+  //Eli siis ongelma oli, että klikkauksella näytti aina edellisen tilanteen keskiarvon ja positiivisten määrän, ei nykyistä tilannetta. 
+  // Siis varmaankin päivittää muuttujien arvoa vasta kun joku tietty osa suoritettu loppuun? 
+
  const incGood = () => {
     setGood(good + 1)
     setTotal(total + 1)
