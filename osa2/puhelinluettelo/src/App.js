@@ -1,10 +1,9 @@
 import { useState } from 'react'
+import FilteredPersonList from './components/FilteredPersonList'
+import Filter from './components/Filter'
+import Add from './components/Add'
 
-const FilteredPersonList = ({filteredPersons}) => {
-  return (
-    filteredPersons.map(person => <li key={person.name}>{person.name} {person.number}</li>)
-  )
-}
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -41,6 +40,7 @@ const App = () => {
   const filterWith = (event) => {
     event.preventDefault()
     setFilteredPersons(persons.filter(person => (person.name).includes(newFilter)))  
+    setNewFilter('')
   }
   const handleFilterChange = (event) => {
     console.log(event.target.value)
@@ -57,29 +57,8 @@ const App = () => {
 
   return (
     <div>
-      <div>
-  <h2>Phonebook</h2>
-  <form onSubmit={filterWith}>
-        <div>
-          filter shown with: <input value={newFilter} onChange={handleFilterChange}/>
-        </div>
-        <div>
-          <button type="submit">filter</button>
-        </div>
-      </form>
-  </div>
-      <h2>Add a new</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+    <Filter filterWith={filterWith} newFilter={newFilter} handleFilterChange={handleFilterChange} />
+    <Add addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
       <h2>Numbers</h2>
       <ul>
       <FilteredPersonList filteredPersons={filteredPersons} />
