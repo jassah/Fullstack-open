@@ -1,21 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import FilteredPersonList from './components/FilteredPersonList'
 import Filter from './components/Filter'
 import Add from './components/Add'
 
-
-
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [filteredPersons, setFilteredPersons] = useState(persons)
+  const [filteredPersons, setFilteredPersons] = useState(persons) // Tämä pitäisi ratkaista toisella tavalla, mutta kun toimii niin antaa olla tässä vaiheessa
   const [newFilter, setNewFilter] = useState('')
+
+ const hook = () => {
+  console.log('effect')
+  axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      console.log('promise fulfilled')
+      setPersons(response.data)
+      setFilteredPersons(response.data)
+      console.log(response.data)
+    })
+}
+
+useEffect(hook, [])
 
   const addName = (event) => {
     event.preventDefault()
@@ -23,7 +31,7 @@ const App = () => {
     console.log(newName, newNumber)
     if (persons.filter(person => person.name === newName).length > 0){
       console.log("on listassa")
-      alert(`${newName} is already addad to phonebook`)
+      alert(`${newName} is already added to phonebook`)
     }
     else {
          const person = {

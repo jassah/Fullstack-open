@@ -1,4 +1,4 @@
-import Course from './components/Course' // importataanko tämä tänne vai indexiin? Indexiin ei ainakaan suoraan toiminut.
+import Course from './components/Course' 
 
 const App = () => {
   const courses = [
