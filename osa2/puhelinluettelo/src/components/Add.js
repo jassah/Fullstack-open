@@ -18,3 +18,4 @@ const Add = ({addName, newName, handleNameChange, newNumber, handleNumberChange}
   }
 
   export default Add
+    
