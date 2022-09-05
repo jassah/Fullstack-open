@@ -51,11 +51,15 @@ useEffect(hook, [])
         const id = personid[0].id
        personService
         .update(id, person)
-        setPersons(persons.concat(person))
+       const updateNumber = persons
+       const updateperson = persons.filter(person => person.name === newName)
+       updateNumber[(updateNumber.indexOf(updateperson[0]))].number = newNumber
+        setPersons(updateNumber)
           setFilteredPersons(persons)
-          setFilteredPersons(filteredPersons.concat(person))
+          setFilteredPersons(updateNumber)
           setNewName('')
           setNewNumber('')
+          console.log("numero muutettu")
       } 
     }
     else {
