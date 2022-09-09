@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import FilteredPersonList from './components/FilteredPersonList'
 import Filter from './components/Filter'
 import Add from './components/Add'
+import Notification from './components/notification'
 import personService from './services/persons'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -10,6 +12,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filteredPersons, setFilteredPersons] = useState(persons) // Tämä pitäisi ratkaista toisella tavalla, mutta kun toimii niin antaa olla tässä vaiheessa
   const [newFilter, setNewFilter] = useState('')
+  const [message, setMessage] = useState(null)
+  const [messageType, setMessageType] = useState("")
 
  const hook = () => {
     personService
@@ -30,7 +34,11 @@ useEffect(hook, [])
       .remove(id)
     setPersons(persons.filter(x => x.id !== id))
     setFilteredPersons(filteredPersons.filter(x => x.id !== id))
-  
+    setMessageType("error")
+    setMessage(`Removed ${name}`)
+    setTimeout(() => {
+    setMessage(null)
+  }, 5000)
     }
     
 }
@@ -60,6 +68,12 @@ useEffect(hook, [])
           setNewName('')
           setNewNumber('')
           console.log("numero muutettu")
+          setMessageType("success")
+        setMessage(`Added new number for ${newName}`)
+      
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
       } 
     }
     else {
@@ -78,6 +92,11 @@ useEffect(hook, [])
           setFilteredPersons(filteredPersons.concat(person))
           setNewName('')
           setNewNumber('')
+          setMessageType("success")
+          setMessage(`Added ${newName}`)
+        setTimeout(() => {
+        setMessage(null)
+      }, 5000)
   }}
 
   const filterWith = (event) => {
@@ -101,8 +120,10 @@ useEffect(hook, [])
 
   return (
     <div>
+    
     <Filter filterWith={filterWith} newFilter={newFilter} handleFilterChange={handleFilterChange} />
     <Add addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
+    <Notification message={message} type={messageType}/>
       <h2>Numbers</h2>
       <ul>
       <FilteredPersonList filteredPersons={filteredPersons} removePerson={removePerson}/>
